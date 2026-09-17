@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body{
+            text-align: center;
+            background-color: rgba(216, 201, 88, 0.538);
+            /* display: grid; */
+            /* justify-content: center; */
+            /* align-items: center; */
+            /* min-height: 100vh; */
+            margin: 0;
+        }
+        input[type="text"], input[type="number"], input[type="datetime-local"], input[type="date"], input[type="submit"] {
+            padding: 5px;
+            margin: 5px;
+            height: 30px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        } 
+        
+    </style>
+</head>
+
+<body>
+    <h2>Registration Form</h2><br>
+    <form action="Register" method="post" id="registrationForm">
+        <input type="text" placeholder="Name" name="username" required><br>
+        <input type="number" placeholder="Account Number" name="accountNumber" required><br>
+        <input type="number" placeholder="Mo.Number" name="mo_number" required><br>
+        <input type="number" placeholder="ATM_Number" name="atm_number" required><br>
+<!--    <input type="datetime-local" name="datetime" required><br> -->
+        <input type="radio" id="male" name="gender" value="male" required>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female" required>
+        <label for="female">Female</label><br>
+<!--    <input type="date" name="birthdate" required><br>-->
+        <input type="text" placeholder="Address" name="address" required><br>
+        <input type="number" placeholder="Amount" name="amount" required><br>
+        <input type="number" placeholder="Pin" name="pin" required><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+
+</html>
