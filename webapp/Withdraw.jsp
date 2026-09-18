@@ -11,39 +11,40 @@
         PreparedStatement ps = null;
         ResultSet rs = null;
 
+			int bank_Amount=0 ;
+			Object atmObj = session.getAttribute("ATM_Number");
+	        int atmNumber = (Integer) atmObj;
+
         if (conn != null) {
             try {
-                String query = "SELECT ATM_Number, ATM_Pin FROM user_details";
+                String query = "SELECT Amount FROM user_details where ATM_Number = ?";
                 ps = conn.prepareStatement(query);
+                ps.setInt(1, atmNumber);
                 
                 rs = ps.executeQuery();
-				int atm_number=0 ;
-				int atm_pin=0;
 		
 			while(rs.next()){
-				atm_number = rs.getInt("ATM_Number");
-				atm_pin = rs.getInt("ATM_Pin");
+				bank_Amount = rs.getInt("Amount");
 		}
-			int number = Integer.parseInt(request.getParameter("atm_number"));
-			int pin = Integer.parseInt(request.getParameter("atm_pin"));
-	 
-  		if  (number == atm_number){
-			if (pin == atm_pin){
-			    session.setAttribute("ATM_Number" , number); 
-
-				%> 
-				<script>window.location.href="HomePage.html";</script>
-<%
-	}else{
-		out.print("Atmpin not match");
-%>	    <script>window.location.href="index.html";</script>  <%
-
-	}
-}else{
-		out.print("Atm number not matcj");
-%>		<script>window.location.href="HomePage.html";</script><%
-	}
+			int amount = Integer.parseInt(request.getParameter("amount"));
+			
+		if(amount <= bank_Amount){
+			bank_Amount -= amount;
+		}
+		
+		String query2 = "UPDATE user_details SET Amount = ? WHERE ATM_Number = ?";
+        ps = conn.prepareStatement(query2);
+        
+        ps.setInt(1, bank_Amount);
+        ps.setInt(2, atmNumber);
+        
+     //   rs = ps.executeUpdate();
 	
+     // FIX: rs की जगह 'int rowsAffected' का यूज़ करें
+        int rowsAffected = ps.executeUpdate();         
+     
+        response.sendRedirect("HomePage.html");
+        
 	}catch(SQLException e){
 		out.print("<p style='color:red;'>Data fetch error: " + e.getMessage() + "</p>");
 	}finally {
@@ -54,6 +55,7 @@
 } else {
 		out.print("Database not connected");
 }
+		    
       
 	%>
     
